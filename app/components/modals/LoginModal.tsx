@@ -2,7 +2,7 @@
 
 import axios from "axios";
 
-import {signIn} from 'next-auth/react';
+import { signIn } from "next-auth/react";
 
 import { AiFillGithub } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -22,7 +22,6 @@ import { ok } from "assert";
 import { useRouter } from "next/navigation";
 
 const LoginModal = () => {
-  
   const router = useRouter();
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
@@ -42,27 +41,23 @@ const LoginModal = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    signIn('credentials', {
-        ...data, 
-        redirect: false,
-    })
-    .then((callback) => {
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((callback) => {
       setIsLoading(false);
 
       if (callback?.ok) {
-          toast.success('Logged in');
-          router.refresh();
-          loginModal.onClose();
+        toast.success("Logged in");
+        router.refresh();
+        loginModal.onClose();
       }
-    })
+    });
   };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
-      <Heading 
-        title="Welcome back" 
-        subtitle="Login to your account" 
-      />
+      <Heading title="Welcome back" subtitle="Login to your account" />
       <Input
         id="email"
         label="Email"
@@ -90,13 +85,13 @@ const LoginModal = () => {
         outline
         label="Continue with Google"
         icon={FcGoogle}
-        onClick={() => {}}
+        onClick={() => signIn("google")}
       />
       <Button
         outline
         label="Continue with Github"
         icon={AiFillGithub}
-        onClick={() => {}}
+        onClick={() => signIn("github")}
       />
       <div
         className="
