@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { AiOutlineMenu } from "react-icons/ai";
 import Avatar from "../Avatar";
 import React, { useState, useCallback } from "react";
-import { signOut } from "next-auth/react";
+
 import MenuItem from "./MenuItem";
 
 import useRegisterModal from "@/app/hooks/useRegisterModal";
@@ -11,14 +11,13 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 
 import { SafeUser } from "@/app/types";
 
+import { signOut } from "next-auth/react";
 
 interface UserMenuProps {
-  currentUser?: SafeUser | null
+  currentUser?: SafeUser | null;
 }
 
-const UserMenu: React.FC<UserMenuProps> = ({
-  currentUser
-}) => {
+const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +25,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   const toggleOpen = useCallback(() => {
     setIsOpen((value) => !value);
   }, []);
-  
+
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
@@ -67,14 +66,14 @@ const UserMenu: React.FC<UserMenuProps> = ({
         >
           <AiOutlineMenu />
           <div className="hidden md:block">
-            <Avatar />
+            <Avatar src={currentUser?.image} />
           </div>
         </div>
       </div>
 
       {isOpen && (
         <div
-        className="
+          className="
           absolute 
           rounded-xl 
           shadow-md
@@ -88,52 +87,27 @@ const UserMenu: React.FC<UserMenuProps> = ({
           "
         >
           <div className="flex flex-col cursor-pointer">
-            { currentUser ? (
-                <>
-                  <MenuItem 
-                    label="My trips"
-                    onClick={() => {}}
-                  />
-                  <MenuItem 
-                    label="My favorites"
-                    onClick={() => {}}
-                  />
-                                  <MenuItem 
-                  label="My reservations" 
-                  onClick={() => {}}
-                />
-                <MenuItem 
-                  label="My properties" 
-                  onClick={() => {}}
-                />
-                <MenuItem 
-                  label="Airbnb your home" 
-                  onClick={() => {}}
-                />
+            {currentUser ? (
+              <>
+                <MenuItem label="My trips" onClick={() => {}} />
+                <MenuItem label="My favorites" onClick={() => {}} />
+                <MenuItem label="My reservations" onClick={() => {}} />
+                <MenuItem label="My properties" onClick={() => {}} />
+                <MenuItem label="Airbnb your home" onClick={() => {}} />
                 <hr />
-                <MenuItem 
-                  label="Logout" 
-                  onClick={() => signOut()}
-                />
-              </> 
+                <MenuItem label="Logout" onClick={() => signOut()} />
+              </>
             ) : (
               <>
-                <MenuItem 
-                  onClick={loginModal.onOpen}
-                  label="Login"
-                />
-                <MenuItem 
-                  onClick={registerModal.onOpen}
-                  label="Sign up"
-                />
+                <MenuItem onClick={loginModal.onOpen} label="Login" />
+                <MenuItem onClick={registerModal.onOpen} label="Sign up" />
               </>
             )}
           </div>
         </div>
       )}
-
     </div>
-  )
-}
+  );
+};
 
-export default UserMenu
+export default UserMenu;
