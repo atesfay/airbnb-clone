@@ -3,7 +3,8 @@
 import Image from "next/image";
 import useCountries from "@/app/hooks/useCountries";
 import { 
-    SafeUser 
+  SafeListing,
+  SafeUser 
   } from "@/app/types";
 import { useRouter } from "next/navigation";
 import { useCallback, useMemo } from "react";
@@ -14,7 +15,7 @@ import Button from "../Button";
 
 
 interface ListingCardProps {
-    data: Listing;
+    data: SafeListing;
     reservation?: Reservation;
     onAction?: (id: string) => void;
     disabled?: boolean;
